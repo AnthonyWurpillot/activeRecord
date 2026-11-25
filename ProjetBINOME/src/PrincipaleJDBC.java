@@ -1,5 +1,3 @@
-
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,30 +12,13 @@ public class PrincipaleJDBC {
 
     public static void main(String[] args) {
 
-        // variables de connection
-        String userName = "root";
-        String password = "";
-        String serverName = "127.0.0.1";
-        String portNumber = "3306";
-        //String portNumber = "8889"; // Port par défaut sur MAMP
-        String tableName = "personne";
-
-        // il faut une base nommee testPersonne !
-        String dbName = "testpersonne";
-
         try {
-            // chargement du driver jdbc
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            DBConnection.setNomDB("application");
+            Connection connect = DBConnection.getConnection();
 
-            // creation de la connection
-            Properties connectionProps = new Properties();
-            connectionProps.put("user", userName);
-            connectionProps.put("password", password);
-            String urlDB = "jdbc:mysql://" + serverName + ":";
-            urlDB += portNumber + "/" + dbName;
-            System.out.println(urlDB);
-            Connection connect = DriverManager.getConnection(urlDB, connectionProps);
-            //Connection connect = DriverManager.getConnection("jdbc:mysql://db4free.net/testpersonne","scruzlara", "root2014");
+            System.out.println("Connexion réussie !");
+            System.out.println("Base utilisée : " + connect.getCatalog());
+
             // creation de la table Personne
             String createString = "CREATE TABLE Personne ( "
                     + "ID INTEGER  AUTO_INCREMENT, " + "NOM varchar(40) NOT NULL, "
@@ -138,9 +119,6 @@ public class PrincipaleJDBC {
 
         } catch (SQLException e) {
             System.out.println("*** ERREUR SQL ***");
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            System.out.println("*** ERREUR lors du chargement du driver ***");
             e.printStackTrace();
         } catch (Exception e) {
             System.out.println("*** ERREUR inconnue... ***");
