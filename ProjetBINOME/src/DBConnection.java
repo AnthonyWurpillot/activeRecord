@@ -46,11 +46,10 @@ public class DBConnection {
     }
     public static synchronized void setNomDB(String nomDB) throws SQLException {
         if (instance != null && !instance.isClosed()) {
-            instance.close();
+
+            dbName = nomDB;
+            instance = null;
+
         }
-        dbName = nomDB;
-        instance = null;
-
-
     }
 }

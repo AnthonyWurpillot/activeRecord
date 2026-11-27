@@ -20,8 +20,6 @@ public class TestDBConnection {
                 System.out.println("Erreur pas le même objet !!!!");
             }
 
-            System.out.println("Type : " + connect1.getClass().getName());
-
             // TEST 2 CHANGER BASE DE DONNER
 
             System.out.println("\nTEST 2 : Changement de base");

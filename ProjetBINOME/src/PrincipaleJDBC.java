@@ -17,17 +17,16 @@ public class PrincipaleJDBC {
             Connection connect = DBConnection.getConnection();
 
             System.out.println("Connexion réussie !");
-            System.out.println("Base utilisée : " + connect.getCatalog());
 
             // creation de la table Personne
-            String createString = "CREATE TABLE Personne ( "
+            String createString = "CREATE TABLE Personne_1 ( "
                     + "ID INTEGER  AUTO_INCREMENT, " + "NOM varchar(40) NOT NULL, "
                     + "PRENOM varchar(40) NOT NULL, " + "PRIMARY KEY (ID))";
             Statement stmt = connect.createStatement();
             stmt.executeUpdate(createString);
 
             // ajout de personne avec requete preparee
-            String SQLPrep = "INSERT INTO Personne (nom, prenom) VALUES (?,?);";
+            String SQLPrep = "INSERT INTO Personne_1 (nom, prenom) VALUES (?,?);";
             PreparedStatement prep;
             //l'option RETURN_GENERATED_KEYS permet de recuperer l'id
             prep = connect.prepareStatement(SQLPrep,
@@ -36,7 +35,7 @@ public class PrincipaleJDBC {
             prep.setString(2, "Spielberg");
             prep.executeUpdate();
 
-            SQLPrep = "INSERT INTO Personne (nom, prenom) VALUES (?,?);";
+            SQLPrep = "INSERT INTO Personne_1 (nom, prenom) VALUES (?,?);";
             //l'option RETURN_GENERATED_KEYS permet de récupérer l'id auto increment
             prep = connect.prepareStatement(SQLPrep,
                     Statement.RETURN_GENERATED_KEYS);
@@ -57,7 +56,7 @@ public class PrincipaleJDBC {
 
             // récupération de toutes les personnes + affichage
             System.out.println("***** AFFICHE TOUTES PERSONNES ***** ");
-            SQLPrep = "SELECT * FROM Personne;";
+            SQLPrep = "SELECT * FROM Personne_1;";
             PreparedStatement prep1 = connect.prepareStatement(SQLPrep);
             prep1.execute();
             rs = prep1.getResultSet();
@@ -70,13 +69,13 @@ public class PrincipaleJDBC {
             }
 
             // suppression de la personne 1
-            prep = connect.prepareStatement("DELETE FROM Personne WHERE id=?");
+            prep = connect.prepareStatement("DELETE FROM Personne_1 WHERE id=?");
             prep.setInt(1, 1);
             prep.execute();
 
             // recuperation de la seconde personne + affichage
             System.out.println("***** AFFICHE PERSONNE 2***** ");
-            SQLPrep = "SELECT * FROM Personne WHERE id=?;";
+            SQLPrep = "SELECT * FROM Personne_1 WHERE id=?;";
             prep1 = connect.prepareStatement(SQLPrep);
             prep1.setInt(1, 2);
             prep1.execute();
@@ -90,7 +89,7 @@ public class PrincipaleJDBC {
             }
 
             // met � jour personne 2
-            String SQLprep = "update Personne set nom=?, prenom=? where id=?;";
+            String SQLprep = "update Personne_1 set nom=?, prenom=? where id=?;";
             prep1 = connect.prepareStatement(SQLprep);
             prep1.setString(1, "R_i_d_l_e_y");
             prep1.setString(2, "S_c_o_t_t");
@@ -99,7 +98,7 @@ public class PrincipaleJDBC {
 
             // recuperation de la seconde personne + affichage
             System.out.println("***** AFFICHE PERSONNE 2 après modif***** ");
-            SQLPrep = "SELECT * FROM Personne WHERE id=?;";
+            SQLPrep = "SELECT * FROM Personne_1 WHERE id=?;";
             prep1 = connect.prepareStatement(SQLPrep);
             prep1.setInt(1, 2);
             prep1.execute();
@@ -113,7 +112,7 @@ public class PrincipaleJDBC {
             }
 
             // suppression de la table personne
-            String drop = "DROP TABLE Personne";
+            String drop = "DROP TABLE Personne_1";
             stmt = connect.createStatement();
             stmt.executeUpdate(drop);
 
